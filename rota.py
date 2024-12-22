@@ -338,13 +338,14 @@ if uploaded_file2 is not None and not df_filtered.empty:
         
         # Exibindo o DataFrame resultante com as colunas selecionadas
         st.write("Aqui estão os dados linkados com as colunas selecionadas (sem repetições de nº pedido):")
+        df_selected = df_selected[df_selected['Logradouro'].notna()]
         #st.dataframe(df_selected, hide_index=True, use_container_width=True, height=600)
     else:
         st.error("As colunas 'ID Cliente' e 'ID' não estão presentes nas tabelas.")
 
 #======================================
 def mapa():
-    df_selected = df_selected[df_selected['Logradouro'].str.strip() != '']
+    
     df_selected[['Latitude', 'Longitude']] = df_selected.apply(get_coordinates, axis=1, result_type="expand")
 
     # Filtrando as colunas relevantes para o mapa
