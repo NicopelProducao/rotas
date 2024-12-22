@@ -7,8 +7,10 @@ import io
 import folium
 from geopy.geocoders import Nominatim
 
-st.set_page_config(layout="wide")
-
+st.set_page_config(layout="wide",
+    page_title="PEDIDOS NICOPEL",
+    page_icon="🌎",
+)
 col1, col2 = st.columns(2)
 
 with st.sidebar:
