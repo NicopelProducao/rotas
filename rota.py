@@ -344,6 +344,7 @@ if uploaded_file2 is not None and not df_filtered.empty:
 
 #======================================
 def mapa():
+    df_selected = df_selected[df_selected['Logradouro'].str.strip() != '']
     df_selected[['Latitude', 'Longitude']] = df_selected.apply(get_coordinates, axis=1, result_type="expand")
 
     # Filtrando as colunas relevantes para o mapa
