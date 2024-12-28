@@ -192,7 +192,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     
     pdf.set_text_color(255, 255, 255)
     # Adicionar cabeçalho da tabela (ajustado para largura da página)
-    pdf.set_font("Arial", size=8)
+    pdf.set_font("Arial", style="B", size=7)
     pdf.set_fill_color(0, 61, 0)  # Verde (RGB)
     
 
