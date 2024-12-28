@@ -193,7 +193,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
     # Adicionar cabeçalho da tabela (ajustado para largura da página)
     pdf.set_font("Arial", size=8)
     pdf.set_fill_color(0, 61, 0)  # Verde (RGB)
-    pdf.set_text_color(0, 0, 0)
+    
 
 # Cabeçalho da tabela
     pdf.cell(15, 5, txt="Pedido", border=1, align="C", fill=True)  # Aplicando a cor de fundo
@@ -203,7 +203,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
     pdf.cell(21, 5, txt="Conferência", border=1, align="C", fill=True)  # Nova coluna "Conferência"
     pdf.cell(21, 5, txt="Faltante", border=1, align="C", fill=True)      # Nova coluna "Faltante"
     pdf.ln(5)  # Adiciona uma linha abaixo
-
+    pdf.set_text_color(0, 0, 0)
     # Inicializar variável para o pedido anterior
     last_order = None
 
