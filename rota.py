@@ -199,7 +199,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     # Cabeçalho da tabela
     pdf.cell(15, 5, txt="Pedido", border=1, align="C", fill=True)  # Aplicando a cor de fundo
     pdf.cell(60, 5, txt="Cliente", border=1, align="C", fill=True)
-    pdf.cell(70, 5, txt="Item", border=1, align="C", fill=True)
+    pdf.cell(80, 5, txt="Item", border=1, align="C", fill=True)
     pdf.cell(17, 5, txt="Qtd", border=1, align="C", fill=True)
     pdf.cell(21, 5, txt="Conferência", border=1, align="C", fill=True)  # Nova coluna "Conferência"
       # Nova coluna "Faltante"
@@ -230,7 +230,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
 
    
         pdf.cell(60, 5, txt=texto_concatenado, border=1, align="L", fill=True if row['color'] == 0 else False)
-        pdf.cell(70, 5, txt=str(row['Descrição Item Faturamento']), border=1, align="C", fill=True if row['color'] == 0 else False)
+        pdf.cell(80, 5, txt=str(row['Descrição Item Faturamento']), border=1, align="C", fill=True if row['color'] == 0 else False)
         pdf.cell(17, 5, txt=str(row['Qtd']), border=1, align="C", fill=True if row['color'] == 0 else False)
         pdf.cell(21, 5, txt="", border=1, align="C", fill=True if row['color'] == 0 else False)  # Conferência (vazio)
     
