@@ -217,7 +217,8 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
 
         # Aplique a cor no PDF com base no valor da coluna "color"
         if row['color'] == 0:
-            pdf.set_fill_color(210, 210, 210)  # Azul claro
+            pdf.set_fill_color(255, 255, 255)
+            #pdf.set_fill_color(210, 210, 210)  # Azul claro
         else:
             pdf.set_fill_color(255, 255, 255)  # Branco
 
