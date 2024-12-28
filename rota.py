@@ -223,11 +223,17 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
 
         # Adicionar dados do pedido com fundo colorido
         pdf.cell(15, 5, txt=str(row['Nº Pedido']), border=1, align="C", fill=True if row['color'] == 0 else False)
-        pdf.cell(60, 5, txt=str(row['Cliente Nome']), border=1, align="L", fill=True if row['color'] == 0 else False)
+        
+        cliente_nome_parte = str(row['Cliente Nome']).split('-')[0].strip()  # Antes do '-'
+        cliente_parte = str(row['Cliente']).split('-')[0].strip()  # Antes do '-' na coluna 'Cliente'
+        texto_concatenado = f"{cliente_nome_parte} - {cliente_parte}"
+
+   
+        pdf.cell(60, 5, txt=texto_concatenado, border=1, align="L", fill=True if row['color'] == 0 else False)
         pdf.cell(60, 5, txt=str(row['Descrição Item Faturamento']), border=1, align="C", fill=True if row['color'] == 0 else False)
         pdf.cell(17, 5, txt=str(row['Qtd']), border=1, align="C", fill=True if row['color'] == 0 else False)
         pdf.cell(21, 5, txt="", border=1, align="C", fill=True if row['color'] == 0 else False)  # Conferência (vazio)
-        pdf.cell(21, 5, txt="", border=1, align="C", fill=True if row['color'] == 0 else False)  # Faltante (vazio)
+    
         
         # Pular uma linha após cada pedido
         pdf.ln()
