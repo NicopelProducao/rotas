@@ -267,6 +267,13 @@ if uploaded_file is not None:
     cidades = df_processed['Cidade Faturamento'].unique()
     selected_cidades = st.sidebar.multiselect("📌 Selecione as Cidades-Estado:", cidades, default=None)
 
+    motorista = st.sidebar.selectbox("Selecione o Motorista", ['Ivan', 'Ronaldo'])
+    veiculo = st.sidebar.selectbox("Selecione o Veiculo", [
+    'Van Master 1 Placa AXV-3J96',
+     'Van Master 2 Placa AXV-3A99',
+      'Caminhão VW Consteletion PLACA AXV-6J98' ,
+      'Caminhão VW 11.180 PLACA AXV-3338'])
+
     clientes = df_processed['Cliente'].unique()  # Obter clientes únicos
     excluded_clientes = st.sidebar.multiselect("📌 Excluir Clientes:", clientes, default=None)  # Multiselect para excluir clientes
 
@@ -309,12 +316,6 @@ if uploaded_file is not None:
     # Exibir DataFrame filtrado com altura aumentada
     st.dataframe(df_filtered.style.apply(apply_color, axis=1), hide_index=True, use_container_width=True, height=600)
     # Gerar e permitir o download do PDF
-
-    col1, col2, col3, col4 = st.columns([1,1,1,3])
-
-    with col1:
-
-        motorista = st.selectbox("Selecione o Motorista", ['Ivan', 'Ronaldo'])
 
     with col3:
         pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades)
