@@ -177,7 +177,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
 
     # Adicionar o título do relatório
     pdf.set_font("Arial", style='B', size=16)
-    pdf.cell(0, 10, txt="Relatório de Pedidos", ln=True, align="C")
+    pdf.cell(0, 10, txt="Relatório de Pedidos/Romaneio", ln=True, align="C")
     pdf.ln(5)
 
     # Adicionar informações de filtro no cabeçalho
@@ -217,7 +217,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
 
         # Aplique a cor no PDF com base no valor da coluna "color"
         if row['color'] == 0:
-            pdf.set_fill_color(173, 216, 230)  # Azul claro
+            pdf.set_fill_color(210, 210, 210)  # Azul claro
         else:
             pdf.set_fill_color(255, 255, 255)  # Branco
 
