@@ -162,7 +162,7 @@ def add_watermark(image_path, output_path, opacity=0.1):
     watermark.save(output_path)
 #======================================
 # Função para gerar o PDF
-def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, , motorista, veiculo ):
+def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
     # Caminho das imagens
     logo_path = "img/Logo_Nicopel.png"
     watermark_path = "watermarked_logo.png"
