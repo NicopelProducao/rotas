@@ -168,8 +168,8 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     watermark_path = "watermarked_logo.png"
     
     # Criar o objeto FPDF com orientação 'L' para Landscape (horizontal)
-    pdf = FPDF(orientation='C', unit='mm', format='A4')
-    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf = FPDF(orientation='P', unit='mm', format='A4')
+    pdf.set_auto_page_break(auto=True, margin=5)
     pdf.add_page()
 
     # Adicionar a imagem da empresa no canto superior esquerdo
