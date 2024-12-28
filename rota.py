@@ -253,7 +253,6 @@ with col2:
     uploaded_file2 = st.file_uploader("Carregue o arquivo Excel dos Cliente", type=["xlsx"])
 
 if uploaded_file is not None:
-    
     # Processar os dados do Excel
     df_processed = process_excel_data(uploaded_file)
 
@@ -268,6 +267,9 @@ if uploaded_file is not None:
     cidades = df_processed['Cidade Faturamento'].unique()
     selected_cidades = st.sidebar.multiselect("📌 Selecione as Cidades-Estado:", cidades, default=None)
 
+    clientes = df_processed['Cliente'].unique()  # Obter clientes únicos
+    excluded_clientes = st.sidebar.multiselect("📌 Excluir Clientes:", clientes, default=None)  # Multiselect para excluir clientes
+
     # Filtrar os dados com base nos filtros selecionados
     df_filtered = df_processed
     if selected_frete != "Todos":
@@ -276,15 +278,17 @@ if uploaded_file is not None:
         df_filtered = df_filtered[df_filtered["Semana"] == selected_semana]
     if selected_cidades:
         df_filtered = df_filtered[df_filtered["Cidade Faturamento"].isin(selected_cidades)]
+    if excluded_clientes:
+        df_filtered = df_filtered[~df_filtered["Cliente"].isin(excluded_clientes)]  # Excluir os clientes selecionados
 
     with st.sidebar:
         # Extrair apenas o nome do cliente após "//"
         df_filtered['Cliente Nome'] = df_filtered['Cliente'].str.split('//').str[1].str.strip()
-        
+
         # Obter a lista de clientes únicos para reorganização
-        clientes = df_filtered['Cliente Nome'].unique().tolist()
+        clientes_filtered = df_filtered['Cliente Nome'].unique().tolist()
         st.sidebar.write("### Reorganizar Clientes")
-        sorted_clientes = sort_items(clientes)
+        sorted_clientes = sort_items(clientes_filtered)
 
         st.markdown("***Grupo Nicopel Embalagens***")
         st.markdown('''Aplicativo desenvolvido por: ''')
@@ -294,7 +298,7 @@ if uploaded_file is not None:
     if sorted_clientes:
         # Aplicar filtro com base na reorganização dos clientes
         df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
-        
+
         # Ordenar pela lista reorganizada
         df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
         df_filtered = df_filtered.sort_values('Cliente Nome')
@@ -304,7 +308,6 @@ if uploaded_file is not None:
 
     # Exibir DataFrame filtrado com altura aumentada
     st.dataframe(df_filtered.style.apply(apply_color, axis=1), hide_index=True, use_container_width=True, height=600)
-    
     # Gerar e permitir o download do PDF
     pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades)
     download_pdf(pdf_output)
