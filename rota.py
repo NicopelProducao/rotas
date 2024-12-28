@@ -260,6 +260,7 @@ with col2:
 if uploaded_file is not None:
     # Processar os dados do Excel
     df_processed = process_excel_data(uploaded_file)
+    df_processed['Data Pedido'] = pd.to_datetime(df_processed['Data Pedido']).dt.strftime('%d/%m/%Y')
 
     # Filtros
     st.sidebar.write("### Filtros")
