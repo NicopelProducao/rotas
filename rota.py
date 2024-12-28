@@ -185,7 +185,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
     pdf.cell(80, 5, txt=f"Semana: {semana if semana else 'Não especificado'}", ln=False)
     pdf.cell(80, 5, txt=f"Tipo de Frete: {frete_tipo if frete_tipo else 'Não especificado'}", ln=False)
     pdf.cell(80, 5, txt=f"Cidades: {cidades if cidades else 'Não especificado'}", ln=False)
-    pdf.cell(80, 5, txt=f"Motorista: {motorista if motorista else 'Não especificado'}", ln=True)
+    pdf.cell(80, 5, txt=f"Motorista: {motorista if motorista else 'Não especificado'}", ln=False)
     pdf.cell(80, 5, txt=f"Veiculo: {veiculo if veiculo else 'Não especificado'}", ln=False)
     pdf.ln(5)  # Adiciona uma linha em branco entre o cabeçalho e a tabela
 
