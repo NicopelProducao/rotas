@@ -333,7 +333,7 @@ if uploaded_file is not None:
 
    # Exibindo DataFrame com a possibilidade de reorganização de colunas
     # Aqui o DataFrame será interativo com o uso do `st.data_editor`
-    df_interactive = st.data_editor(df, use_container_width=True, height=600)
+    df_interactive = st.data_editor(df_filtered, use_container_width=True, height=600)
 
     # Atualizando o DataFrame original com as mudanças feitas no front-end
     df = df_interactive.copy()
