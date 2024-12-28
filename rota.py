@@ -162,7 +162,7 @@ def add_watermark(image_path, output_path, opacity=0.1):
     watermark.save(output_path)
 #======================================
 # Função para gerar o PDF
-def gerar_pdf(df_filtered, frete_tipo, semana,  cidades ):
+def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, , motorista, veiculo ):
     # Caminho das imagens
     logo_path = "img/Logo_Nicopel.png"
     watermark_path = "watermarked_logo.png"
@@ -185,6 +185,8 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades ):
     pdf.cell(80, 5, txt=f"Semana: {semana if semana else 'Não especificado'}", ln=False)
     pdf.cell(80, 5, txt=f"Tipo de Frete: {frete_tipo if frete_tipo else 'Não especificado'}", ln=True)
     pdf.cell(80, 5, txt=f"Cidades: {cidades if cidades else 'Não especificado'}", ln=True)
+    pdf.cell(80, 5, txt=f"Motorista: {motorista if motorista else 'Não especificado'}", ln=True)
+    pdf.cell(80, 5, txt=f"Veiculo: {veiculo if veiculo else 'Não especificado'}", ln=True)
     pdf.ln(5)  # Adiciona uma linha em branco entre o cabeçalho e a tabela
 
     # Adicionar cabeçalho da tabela (ajustado para largura da página)
