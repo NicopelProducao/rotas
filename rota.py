@@ -162,7 +162,7 @@ def add_watermark(image_path, output_path, opacity=0.1):
     watermark.save(output_path)
 #======================================
 # Função para gerar o PDF
-def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
+def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veiculo ):
     # Caminho das imagens
     logo_path = "img/Logo_Nicopel.png"
     watermark_path = "watermarked_logo.png"
@@ -184,8 +184,9 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
     pdf.set_font("Arial", size=8)
     pdf.cell(80, 5, txt=f"Semana: {semana if semana else 'Não especificado'}", ln=False)
     pdf.cell(80, 5, txt=f"Tipo de Frete: {frete_tipo if frete_tipo else 'Não especificado'}", ln=False)
-    pdf.cell(80, 5, txt=f"Cidades: {cidades if cidades else 'Não especificado'}", ln=False)
-    pdf.cell(80, 5, txt=f"Motorista: {motorista if motorista else 'Não especificado'}", ln=True)
+    pdf.cell(80, 5, txt=f"Dia: {dia if dia else 'Não especificado'}", ln=False)
+    pdf.cell(80, 5, txt=f"Cidades: {cidades if cidades else 'Não especificado'}", ln=True)
+    pdf.cell(80, 5, txt=f"Motorista: {motorista if motorista else 'Não especificado'}", ln=False)
     pdf.cell(80, 5, txt=f"Veiculo: {veiculo if veiculo else 'Não especificado'}", ln=False)
     pdf.ln(5)  # Adiciona uma linha em branco entre o cabeçalho e a tabela
     
@@ -195,7 +196,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, motorista, veiculo ):
     pdf.set_fill_color(0, 61, 0)  # Verde (RGB)
     
 
-# Cabeçalho da tabela
+    # Cabeçalho da tabela
     pdf.cell(15, 5, txt="Pedido", border=1, align="C", fill=True)  # Aplicando a cor de fundo
     pdf.cell(100, 5, txt="Cliente", border=1, align="C", fill=True)
     pdf.cell(100, 5, txt="Item", border=1, align="C", fill=True)
@@ -268,6 +269,9 @@ if uploaded_file is not None:
     semanas = df_processed['Semana'].unique()
     selected_semana = st.sidebar.selectbox("📌 Selecione a Semana do Pedido:", ["Todas"] + list(semanas))
 
+    dia = df_processed['Data Pedido'].unique()
+    selected_dia = st.sidebar.selectbox("📌 Selecione a Semana do Pedido:", ["Todas"] + list(dia))
+
     cidades = df_processed['Cidade Faturamento'].unique()
     selected_cidades = st.sidebar.multiselect("📌 Selecione as Cidades-Estado:", cidades, default=None)
 
@@ -287,6 +291,8 @@ if uploaded_file is not None:
         df_filtered = df_filtered[df_filtered["Tipo Frete"] == selected_frete]
     if selected_semana != "Todas":
         df_filtered = df_filtered[df_filtered["Semana"] == selected_semana]
+    if selected_dia != "Todas":
+        df_filtered = df_filtered[df_filtered["Data Pedido"] == selected_semana]
     if selected_cidades:
         df_filtered = df_filtered[df_filtered["Cidade Faturamento"].isin(selected_cidades)]
     if excluded_clientes:
@@ -322,7 +328,7 @@ if uploaded_file is not None:
     # Gerar e permitir o download do PDF
 
  
-    pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades, motorista, veiculo)
+    pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades, selected_dia, motorista, veiculo)
     download_pdf(pdf_output)
 
 
