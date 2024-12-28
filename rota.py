@@ -309,8 +309,8 @@ if uploaded_file is not None:
     # Exibir DataFrame filtrado com altura aumentada
     st.dataframe(df_filtered.style.apply(apply_color, axis=1), hide_index=True, use_container_width=True, height=600)
     # Gerar e permitir o download do PDF
-    motorista = selectbox("Selecione o Motorista", ['Ivan', 'Ronaldo'])
-    
+    motorista = st.selectbox("Selecione o Motorista", ['Ivan', 'Ronaldo'])
+
     pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades)
     download_pdf(pdf_output)
 
