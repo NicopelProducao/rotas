@@ -255,7 +255,7 @@ def apply_color(row):
 with col1:
     uploaded_file = st.file_uploader("Carregue o arquivo Excel dos pedidos", type=["xlsx"])
 with col2:
-    uploaded_file2 = st.file_uploader("Carregue o arquivo Excel dos Cliente", type=["xlsx"])
+    uploaded_file2 = st.file_uploader("Carregue o arquivo Excel dos Cliente (ID, RAZAO, END CNPJ, CEP, LOGRADOURO, NUMERO, BAIRRO, CIDADE, UF)", type=["xlsx"])
 
 if uploaded_file is not None:
     # Processar os dados do Excel
