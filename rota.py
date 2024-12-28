@@ -331,13 +331,15 @@ if uploaded_file is not None:
     # Recalcular a coluna color após os filtros e a reorganização
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
 
-    # Exibir DataFrame filtrado com altura aumentada
-    df_interactive = st.data_editor(df_filtered, use_container_width=True, height=600)
+   # Exibindo DataFrame com a possibilidade de reorganização de colunas
+    # Aqui o DataFrame será interativo com o uso do `st.data_editor`
+    df_interactive = st.data_editor(df, use_container_width=True, height=600)
 
-# Atualizar o DataFrame original com as mudanças feitas no front-end
-# Reordenar baseado no DataFrame interativo, se necessário
-    df_filtered = df_interactive.copy()
-    # Gerar e permitir o download do PDF
+    # Atualizando o DataFrame original com as mudanças feitas no front-end
+    df = df_interactive.copy()
+
+    # Mostrar o DataFrame reorganizado
+    st.write(df)
 
  
     pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades, selected_dia, motorista, veiculo)
