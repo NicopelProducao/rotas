@@ -292,7 +292,7 @@ if uploaded_file is not None:
         df_filtered = df_filtered[df_filtered["Tipo Frete"] == selected_frete]
     if selected_semana != "Todas":
         df_filtered = df_filtered[df_filtered["Semana"] == selected_semana]
-    if selected_dia != "Todas":
+    if selected_dia:
         df_filtered = df_filtered[df_filtered["Data Pedido"].isin(selected_dia)]
     if selected_cidades:
         df_filtered = df_filtered[df_filtered["Cidade Faturamento"].isin(selected_cidades)]
