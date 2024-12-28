@@ -325,7 +325,7 @@ if uploaded_file is not None:
         df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
 
         # Ordenar pela lista reorganizada
-        df_filtered['Cliente Nome'] = pd.dategorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
+        df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
         df_filtered = df_filtered.sort_values('Cliente Nome')
 
     # Recalcular a coluna color após os filtros e a reorganização
