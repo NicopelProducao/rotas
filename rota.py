@@ -310,7 +310,7 @@ if uploaded_file is not None:
     st.dataframe(df_filtered.style.apply(apply_color, axis=1), hide_index=True, use_container_width=True, height=600)
     # Gerar e permitir o download do PDF
 
-    col1, col2, col3. col4 = st.columns(4)
+    col1, col2, col3, col4 = st.columns([1,1,1,3])
 
     with col1:
 
