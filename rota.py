@@ -314,7 +314,7 @@ if uploaded_file is not None:
 
     with col1:
 
-        motorista = st.selectbox("Selecione o Motorista", ['Ivan', 'Ronaldo'], use_column_width=True)
+        motorista = st.selectbox("Selecione o Motorista", ['Ivan', 'Ronaldo'])
 
     with col3:
         pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades)
