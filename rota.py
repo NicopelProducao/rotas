@@ -317,9 +317,9 @@ if uploaded_file is not None:
     st.dataframe(df_filtered.style.apply(apply_color, axis=1), hide_index=True, use_container_width=True, height=600)
     # Gerar e permitir o download do PDF
 
-    with col3:
-        pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades)
-        download_pdf(pdf_output)
+ 
+    pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades, motorista, veiculo)
+    download_pdf(pdf_output)
 
 
 
