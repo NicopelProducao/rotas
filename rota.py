@@ -271,7 +271,7 @@ if uploaded_file is not None:
     selected_semana = st.sidebar.selectbox("📌 Selecione a Semana do Pedido:", ["Todas"] + list(semanas))
 
     dia = df_processed['Data Pedido'].unique()
-    selected_dia = st.sidebar.selectbox("📌 Selecione o dia do Pedido:", ["Todas"] + list(dia))
+    selected_dia = st.sidebar.multiselect("📌 Selecione o dia do Pedido:", ["Todas"] + list(dia))
 
     cidades = df_processed['Cidade Faturamento'].unique()
     selected_cidades = st.sidebar.multiselect("📌 Selecione as Cidades-Estado:", cidades, default=None)
@@ -293,7 +293,7 @@ if uploaded_file is not None:
     if selected_semana != "Todas":
         df_filtered = df_filtered[df_filtered["Semana"] == selected_semana]
     if selected_dia != "Todas":
-        df_filtered = df_filtered[df_filtered["Data Pedido"] == selected_semana]
+        df_filtered = df_filtered[df_filtered["Data Pedido"].isin(selected_dia)]
     if selected_cidades:
         df_filtered = df_filtered[df_filtered["Cidade Faturamento"].isin(selected_cidades)]
     if excluded_clientes:
