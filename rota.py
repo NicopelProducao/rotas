@@ -326,52 +326,40 @@ if uploaded_file is not None:
     with st.sidebar:
         # Extrair apenas o nome do cliente após "//"
         df_filtered['Cliente Nome'] = df_filtered['Cliente'].str.split('//').str[1].str.strip()
-
-        # Filtrar as cidades únicas
+        
         cidades_filtered = df_filtered['Cidade Faturamento'].unique().tolist()
         st.sidebar.write("### Reorganizar Cidades")
         sorted_cidades = sort_items(cidades_filtered)
 
-        # Filtro para escolher cidades
-        cidades_selecionadas = st.sidebar.multiselect("Escolha as Cidades", sorted_cidades, default=sorted_cidades)
-        
-        # Filtrar os dados pelas cidades selecionadas
-        df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(cidades_selecionadas)]
-        
-        # Exibir as cidades reorganizadas
-        df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
-
-        # Filtro de clientes
+        # Obter a lista de clientes únicos para reorganização
         clientes_filtered = df_filtered['Cliente Nome'].unique().tolist()
         st.sidebar.write("### Reorganizar Clientes")
         sorted_clientes = sort_items(clientes_filtered)
-        clientes_selecionados = st.sidebar.multiselect("Escolha os Clientes", sorted_clientes, default=sorted_clientes)
+
+        # Obter a lista de cidades únicas para reorganização
         
-        # Filtrar os dados pelos clientes selecionados
-        df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(clientes_selecionados)]
 
-    # Se houverem cidades selecionadas, o restante do código segue
-    if cidades_selecionadas or clientes_selecionados:
-    
+        st.markdown("***Grupo Nicopel Embalagens***")
+        st.markdown('''Aplicativo desenvolvido por: ''')
+        st.markdown(''':green-background[João Gabriel Brighenti]''')
+        st.markdown(''':green[Todos os direitos reservados ©. V1.3.2]''')
 
-        # Para cada cidade selecionada, adicionar um campo para reordenar os pedidos
-        # Para cada cidade selecionada, adicionar um campo para reordenar os pedidos
-        for cidade in cidades_selecionadas:
-            st.write(f"### Reorganizar Pedidos - {cidade}")
-            pedidos_cidade = df_filtered[df_filtered['Cidade Faturamento'] == cidade]
+    if sorted_clientes or sorted_cidades:
+        # Aplicar filtro com base na reorganização das cidades
+        if sorted_cidades:
+            df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(sorted_cidades)]
+            # Ordenar pela lista reorganizada de cidades
+            df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
+        # Aplicar filtro com base na reorganização dos clientes
+        if sorted_clientes:
+            df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
+            # Ordenar pela lista reorganizada de clientes
+            df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
 
-            # Ordenar os pedidos da cidade
-            sorted_pedidos = sort_items(pedidos_cidade['Cliente Nome'].tolist())
-            pedidos_selecionados = st.multiselect(f"Escolha a ordem dos pedidos em {cidade}", sorted_pedidos, default=sorted_pedidos)
+        
 
-            # Garantir que a lista de pedidos selecionados tenha valores únicos
-            pedidos_selecionados = list(set(pedidos_selecionados))  # Remover duplicatas
-
-            # Filtrar novamente os pedidos com a ordem selecionada
-            pedidos_cidade = pedidos_cidade[pedidos_cidade['Cliente Nome'].isin(pedidos_selecionados)]
-
-            # Se houver categorias duplicadas, isso geraria um erro ao criar o Categorical
-            pedidos_cidade['Cliente Nome'] = pd.Categorical(pedidos_cidade['Cliente Nome'], categories=pedidos_selecionados, ordered=True)
+        # Ordenar o DataFrame final
+        df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
