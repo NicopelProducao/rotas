@@ -340,14 +340,21 @@ if uploaded_file is not None:
     if sorted_clientes or sorted_cidades:
         # Aplicar filtro com base na reorganização das cidades
         if sorted_cidades:
+            # Filtrar pelas cidades selecionadas
             df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(sorted_cidades)]
             # Ordenar pela lista reorganizada de cidades
             df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
-        # Aplicar filtro com base na reorganização dos clientes
-        if sorted_clientes:
-            df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
-            # Ordenar pela lista reorganizada de clientes
-            df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
+            
+            # Agora, para cada cidade, reorganizamos os clientes de acordo com a ordem desejada
+            if sorted_clientes:
+                # Criar um mapeamento de clientes por cidade
+                city_client_mapping = {cidade: sorted_clientes for cidade in sorted_cidades}
+                
+                # Reordenar clientes por cidade
+                df_filtered['Cliente Nome'] = df_filtered.apply(
+                    lambda row: pd.Categorical([row['Cliente Nome']], categories=city_client_mapping[row['Cidade Faturamento']], ordered=True)[0],
+                    axis=1
+                )
 
         
 
