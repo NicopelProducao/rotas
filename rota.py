@@ -258,12 +258,12 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     return pdf_output
 #======================================
 def to_excel(df):
-        # Cria um arquivo Excel em memória
-        output = io.BytesIO()
-        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
-            df.to_excel(writer, index=False, sheet_name='Relatório')
-        output.seek(0)
-        return output
+    # Cria um arquivo Excel em memória
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='openpyxl') as writer:
+        df.to_excel(writer, index=False, sheet_name='Relatório')
+    output.seek(0)
+    return output
 # Função para o botão de download
 def download_pdf(pdf_output):
     with open(pdf_output, "rb") as f:
