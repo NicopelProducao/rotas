@@ -349,7 +349,7 @@ if uploaded_file is not None:
         st.markdown(''':green-background[João Gabriel Brighenti]''')
         st.markdown(''':green[Todos os direitos reservados ©. V1.3.2]''')
 
-    df_filtered['Cliente Nome'] = df_filtered['Cliente Nome'].apply(remove_last_term)
+    
     if sorted_clientes or sorted_cidades:
         # Aplicar filtro com base na reorganização das cidades
         if sorted_cidades:
