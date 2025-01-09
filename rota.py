@@ -326,7 +326,7 @@ if uploaded_file is not None:
         sorted_clientes = sort_items(clientes_filtered)
 
         # Obter a lista de cidades únicas para reorganização
-        cidades_filtered = df_filtered['Cidade'].unique().tolist()
+        cidades_filtered = df_filtered['Cidade Faturamento'].unique().tolist()
         st.sidebar.write("### Reorganizar Cidades")
         sorted_cidades = sort_items(cidades_filtered)
 
@@ -344,12 +344,12 @@ if uploaded_file is not None:
 
         # Aplicar filtro com base na reorganização das cidades
         if sorted_cidades:
-            df_filtered = df_filtered[df_filtered['Cidade'].isin(sorted_cidades)]
+            df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(sorted_cidades)]
             # Ordenar pela lista reorganizada de cidades
-            df_filtered['Cidade'] = pd.Categorical(df_filtered['Cidade'], categories=sorted_cidades, ordered=True)
+            df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
 
         # Ordenar o DataFrame final
-        df_filtered = df_filtered.sort_values(['Cidade', 'Cliente Nome'])
+        df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
