@@ -257,6 +257,13 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     pdf.output(pdf_output)
     return pdf_output
 #======================================
+def to_excel(df):
+        # Cria um arquivo Excel em memória
+        output = io.BytesIO()
+        with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+            df.to_excel(writer, index=False, sheet_name='Relatório')
+        output.seek(0)
+        return output
 # Função para o botão de download
 def download_pdf(pdf_output):
     with open(pdf_output, "rb") as f:
@@ -365,7 +372,16 @@ if uploaded_file is not None:
     pdf_output = gerar_pdf(df_filtered, selected_frete, selected_semana, selected_cidades, selected_dia, motorista, veiculo)
     download_pdf(pdf_output)
 
+    
 
+    # Botão para download do relatório em Excel
+    excel_file = to_excel(df_filtered)
+    st.download_button(
+        label="Baixar Relatório Excel",
+        data=excel_file,
+        file_name="relatorio.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
 
 if uploaded_file2 is not None:
     if uploaded_file2.name.endswith("csv"):
