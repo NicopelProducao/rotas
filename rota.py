@@ -325,18 +325,31 @@ if uploaded_file is not None:
         st.sidebar.write("### Reorganizar Clientes")
         sorted_clientes = sort_items(clientes_filtered)
 
+        # Obter a lista de cidades únicas para reorganização
+        cidades_filtered = df_filtered['Cidade'].unique().tolist()
+        st.sidebar.write("### Reorganizar Cidades")
+        sorted_cidades = sort_items(cidades_filtered)
+
         st.markdown("***Grupo Nicopel Embalagens***")
         st.markdown('''Aplicativo desenvolvido por: ''')
         st.markdown(''':green-background[João Gabriel Brighenti]''')
         st.markdown(''':green[Todos os direitos reservados ©. V1.3.2]''')
 
-    if sorted_clientes:
+    if sorted_clientes or sorted_cidades:
         # Aplicar filtro com base na reorganização dos clientes
-        df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
+        if sorted_clientes:
+            df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
+            # Ordenar pela lista reorganizada de clientes
+            df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
 
-        # Ordenar pela lista reorganizada
-        df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
-        df_filtered = df_filtered.sort_values('Cliente Nome')
+        # Aplicar filtro com base na reorganização das cidades
+        if sorted_cidades:
+            df_filtered = df_filtered[df_filtered['Cidade'].isin(sorted_cidades)]
+            # Ordenar pela lista reorganizada de cidades
+            df_filtered['Cidade'] = pd.Categorical(df_filtered['Cidade'], categories=sorted_cidades, ordered=True)
+
+        # Ordenar o DataFrame final
+        df_filtered = df_filtered.sort_values(['Cidade', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
