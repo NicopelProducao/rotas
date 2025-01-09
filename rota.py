@@ -217,9 +217,10 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
             # Verificar se a cidade é diferente da última cidade processada
             if row['Cidade Faturamento'] != last_city:
                 # Adicionar a cidade ao PDF
-                pdf.set_fill_color(230, 230, 230)  # Cor de fundo para a cidade (opcional)
+                pdf.set_fill_color(230, 230, 230)
+                pdf.ln(5)   # Cor de fundo para a cidade (opcional)
                 pdf.cell(193, 5, txt=f"Cidade: {row['Cidade Faturamento']}", border=1, align="L", fill=True)
-                pdf.ln(5)  # Pular uma linha após a cidade
+                 # Pular uma linha após a cidade
 
             # Adicionar um espaço extra para separar os pedidos
             pdf.ln(2)  # 5mm de espaço entre os pedidos
