@@ -215,6 +215,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
         # Verificar se o número do pedido mudou
         if row['Nº Pedido'] != last_order:
             # Verificar se a cidade é diferente da última cidade processada
+            pdf.ln(2)
             if row['Cidade Faturamento'] != last_city:
                 # Adicionar a cidade ao PDF
                 pdf.set_fill_color(230, 230, 230)  # Cor de fundo para a cidade (opcional)
