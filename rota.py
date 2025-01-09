@@ -332,7 +332,7 @@ if uploaded_file is not None:
 
     # A ideia agora é aplicar a reorganização diretamente no DataFrame para que a mudança seja permanente
 
-    # Para cada cidade, vamos reorganizar os clientes e atualizar permanentemente o DataFrame
+    # Aguardando a reorganização das cidades
     for cidade in sorted_cidades:
         # Filtrar os clientes para a cidade atual
         clientes_na_cidade = df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'].unique().tolist()
@@ -341,14 +341,14 @@ if uploaded_file is not None:
         st.sidebar.write(f"### Reorganizar Clientes em {cidade}")
         sorted_clientes_na_cidade = sort_items(clientes_na_cidade, key=f"cliente_reorganizar_{cidade}")
 
-        # Atualizar o DataFrame permanentemente com a nova ordem de clientes
+        # Aqui, atualizamos permanentemente o DataFrame com a nova ordem de clientes
         df_filtered.loc[df_filtered['Cidade Faturamento'] == cidade, 'Cliente Nome'] = pd.Categorical(
             df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'], 
             categories=sorted_clientes_na_cidade, 
             ordered=True
         )
 
-    # Ordenar o DataFrame final para garantir a ordem correta das cidades e clientes
+    # Após reorganizar, ordena o DataFrame por Cidade e Cliente Nome
     df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
