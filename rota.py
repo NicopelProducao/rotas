@@ -208,17 +208,25 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     # Inicializar variável para o pedido anterior
     last_order = None
 
-    # Preencher os dados da tabela com as cores e espaço entre pedidos
+    last_order = None  # Último número de pedido
+    last_city = None  # Última cidade processada
+
     for index, row in df_filtered.iterrows():
-        # Adicionar um espaço extra se o número do pedido mudar
+        # Verificar se o número do pedido mudou
         if row['Nº Pedido'] != last_order:
-            # Adicionar uma linha em branco para separar os pedidos
+            # Verificar se a cidade é diferente da última cidade processada
+            if row['Cidade Faturamento'] != last_city:
+                # Adicionar a cidade ao PDF
+                pdf.set_fill_color(230, 230, 230)  # Cor de fundo para a cidade (opcional)
+                pdf.cell(193, 5, txt=f"Cidade: {row['Cidade']}", border=1, align="L", fill=True)
+                pdf.ln(5)  # Pular uma linha após a cidade
+
+            # Adicionar um espaço extra para separar os pedidos
             pdf.ln(2)  # 5mm de espaço entre os pedidos
 
-        # Aplique a cor no PDF com base no valor da coluna "color"
+        # Aplicar a cor no PDF com base no valor da coluna "color"
         if row['color'] == 0:
-            pdf.set_fill_color(255, 255, 255)
-            #pdf.set_fill_color(210, 210, 210)  # Azul claro
+            pdf.set_fill_color(255, 255, 255)  # Branco
         else:
             pdf.set_fill_color(255, 255, 255)  # Branco
 
@@ -229,18 +237,17 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
         cliente_parte = str(row['Cliente']).split('-')[0].strip()  # Antes do '-' na coluna 'Cliente'
         texto_concatenado = f"{cliente_nome_parte} - {cliente_parte}"
 
-   
         pdf.cell(60, 5, txt=texto_concatenado, border=1, align="L", fill=True if row['color'] == 0 else False)
         pdf.cell(80, 5, txt=str(row['Descrição Item Faturamento']), border=1, align="C", fill=True if row['color'] == 0 else False)
         pdf.cell(17, 5, txt=str(row['Qtd']), border=1, align="C", fill=True if row['color'] == 0 else False)
         pdf.cell(21, 5, txt="", border=1, align="C", fill=True if row['color'] == 0 else False)  # Conferência (vazio)
-    
         
         # Pular uma linha após cada pedido
         pdf.ln()
 
-        # Atualizar o número do último pedido
+        # Atualizar o número do último pedido e a última cidade processada
         last_order = row['Nº Pedido']
+        last_city = row['Cidade Faturamento']
 
     # Salvar o arquivo PDF no diretório local
     pdf_output = "pedido_relatorio.pdf"  # Caminho para salvar no diretório local
