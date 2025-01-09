@@ -352,9 +352,9 @@ if uploaded_file is not None:
 
     # Se houverem cidades selecionadas, o restante do código segue
     if cidades_selecionadas or clientes_selecionados:
-        # Exibir os dados filtrados
-        st.write("Dados Filtrados:", df_filtered)
+    
 
+        # Para cada cidade selecionada, adicionar um campo para reordenar os pedidos
         # Para cada cidade selecionada, adicionar um campo para reordenar os pedidos
         for cidade in cidades_selecionadas:
             st.write(f"### Reorganizar Pedidos - {cidade}")
@@ -364,15 +364,14 @@ if uploaded_file is not None:
             sorted_pedidos = sort_items(pedidos_cidade['Cliente Nome'].tolist())
             pedidos_selecionados = st.multiselect(f"Escolha a ordem dos pedidos em {cidade}", sorted_pedidos, default=sorted_pedidos)
 
+            # Garantir que a lista de pedidos selecionados tenha valores únicos
+            pedidos_selecionados = list(set(pedidos_selecionados))  # Remover duplicatas
+
             # Filtrar novamente os pedidos com a ordem selecionada
             pedidos_cidade = pedidos_cidade[pedidos_cidade['Cliente Nome'].isin(pedidos_selecionados)]
+
+            # Se houver categorias duplicadas, isso geraria um erro ao criar o Categorical
             pedidos_cidade['Cliente Nome'] = pd.Categorical(pedidos_cidade['Cliente Nome'], categories=pedidos_selecionados, ordered=True)
-
-            # Mostrar os pedidos reordenados para a cidade
-            st.write(pedidos_cidade)
-
-        # Ordenar o DataFrame final para manter a ordem das cidades
-        df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
