@@ -330,27 +330,25 @@ if uploaded_file is not None:
         st.markdown(''':green-background[João Gabriel Brighenti]''')
         st.markdown(''':green[Todos os direitos reservados ©. V1.3.2]''')
 
-    # Filtrar o DataFrame para incluir apenas as cidades selecionadas
-    if sorted_cidades:
-        df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(sorted_cidades)]
+    # A ideia agora é aplicar a reorganização diretamente no DataFrame para que a mudança seja permanente
 
-        # Ordenar o DataFrame por cidade
-        df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
-        df_filtered = df_filtered.sort_values('Cidade Faturamento')
+    # Para cada cidade, vamos reorganizar os clientes e atualizar permanentemente o DataFrame
+    for cidade in sorted_cidades:
+        # Filtrar os clientes para a cidade atual
+        clientes_na_cidade = df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'].unique().tolist()
 
-        # Exibir o reorganizador de clientes dentro de cada cidade
-        for cidade in sorted_cidades:
-            # Filtrar os clientes para a cidade atual
-            clientes_na_cidade = df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'].unique().tolist()
+        # Reorganizar os clientes dessa cidade
+        st.sidebar.write(f"### Reorganizar Clientes em {cidade}")
+        sorted_clientes_na_cidade = sort_items(clientes_na_cidade, key=f"cliente_reorganizar_{cidade}")
 
-            # Reorganizar os clientes dessa cidade, garantindo chave única
-            st.sidebar.write(f"### Reorganizar Clientes em {cidade}")
-            sorted_clientes_na_cidade = sort_items(clientes_na_cidade, key=f"cliente_reorganizar_{cidade}")
+        # Atualizar o DataFrame permanentemente com a nova ordem de clientes
+        df_filtered.loc[df_filtered['Cidade Faturamento'] == cidade, 'Cliente Nome'] = pd.Categorical(
+            df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'], 
+            categories=sorted_clientes_na_cidade, 
+            ordered=True
+        )
 
-            # Atualizar o DataFrame com a nova ordem de clientes, mantendo as cidades inalteradas
-            df_filtered.loc[df_filtered['Cidade Faturamento'] == cidade, 'Cliente Nome'] = pd.Categorical(df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'], categories=sorted_clientes_na_cidade, ordered=True)
-
-        # Ordenar o DataFrame final para garantir a ordem correta
+    # Ordenar o DataFrame final para garantir a ordem correta das cidades e clientes
     df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
