@@ -336,17 +336,18 @@ if uploaded_file is not None:
         st.markdown(''':green[Todos os direitos reservados ©. V1.3.2]''')
 
     if sorted_clientes or sorted_cidades:
+        # Aplicar filtro com base na reorganização das cidades
+        if sorted_cidades:
+            df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(sorted_cidades)]
+            # Ordenar pela lista reorganizada de cidades
+            df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
         # Aplicar filtro com base na reorganização dos clientes
         if sorted_clientes:
             df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes)]
             # Ordenar pela lista reorganizada de clientes
             df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes, ordered=True)
 
-        # Aplicar filtro com base na reorganização das cidades
-        if sorted_cidades:
-            df_filtered = df_filtered[df_filtered['Cidade Faturamento'].isin(sorted_cidades)]
-            # Ordenar pela lista reorganizada de cidades
-            df_filtered['Cidade Faturamento'] = pd.Categorical(df_filtered['Cidade Faturamento'], categories=sorted_cidades, ordered=True)
+        
 
         # Ordenar o DataFrame final
         df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
