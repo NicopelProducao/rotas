@@ -161,6 +161,11 @@ def add_watermark(image_path, output_path, opacity=0.1):
     # Salvar a nova imagem com a opacidade ajustada
     watermark.save(output_path)
 #======================================
+def remove_last_term(cliente_nome):
+    # Dividir a string pelo espaço em branco e remover o último termo
+    parts = cliente_nome.split('-')  # Ajuste o delimitador se necessário (por exemplo, se for um espaço ou outro caractere)
+    return ' - '.join(parts[:-1]).strip()
+
 # Função para gerar o PDF
 def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veiculo ):
     # Caminho das imagens
@@ -344,6 +349,7 @@ if uploaded_file is not None:
         st.markdown(''':green-background[João Gabriel Brighenti]''')
         st.markdown(''':green[Todos os direitos reservados ©. V1.3.2]''')
 
+    df_filtered['Cliente Nome'] = df_filtered['Cliente Nome'].apply(remove_last_term)
     if sorted_clientes or sorted_cidades:
         # Aplicar filtro com base na reorganização das cidades
         if sorted_cidades:
