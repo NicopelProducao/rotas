@@ -323,7 +323,7 @@ if uploaded_file is not None:
         # Obter a lista de cidades únicas para reorganização
         cidades_filtered = df_filtered['Cidade Faturamento'].unique().tolist()
         st.sidebar.write("### Reorganizar Cidades")
-        sorted_cidades = sort_items(cidades_filtered, key="cidade_reorganizar")
+        sorted_cidades = sort_items(cidades_filtered)
 
         st.markdown("***Grupo Nicopel Embalagens***")
         st.markdown('''Aplicativo desenvolvido por: ''')
@@ -343,9 +343,9 @@ if uploaded_file is not None:
             # Filtrar os clientes para a cidade atual
             clientes_na_cidade = df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'].unique().tolist()
 
-            # Reorganizar os clientes dessa cidade, garantindo chave única
+            # Reorganizar os clientes dessa cidade
             st.sidebar.write(f"### Reorganizar Clientes em {cidade}")
-            sorted_clientes_na_cidade = sort_items(clientes_na_cidade, key=f"cliente_reorganizar_{cidade}")
+            sorted_clientes_na_cidade = sort_items(clientes_na_cidade)
 
             # Aplicar o filtro para os clientes selecionados dentro dessa cidade
             df_filtered = df_filtered[df_filtered['Cliente Nome'].isin(sorted_clientes_na_cidade)]
@@ -353,6 +353,7 @@ if uploaded_file is not None:
             # Ordenar os clientes dentro da cidade
             df_filtered['Cliente Nome'] = pd.Categorical(df_filtered['Cliente Nome'], categories=sorted_clientes_na_cidade, ordered=True)
             df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
+
   
 
     # Recalcular a coluna color após os filtros e a reorganização
