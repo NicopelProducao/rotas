@@ -351,7 +351,7 @@ if uploaded_file is not None:
             df_filtered.loc[df_filtered['Cidade Faturamento'] == cidade, 'Cliente Nome'] = pd.Categorical(df_filtered[df_filtered['Cidade Faturamento'] == cidade]['Cliente Nome'], categories=sorted_clientes_na_cidade, ordered=True)
 
         # Ordenar o DataFrame final para garantir a ordem correta
-        df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
+            df_filtered = df_filtered.sort_values(['Cidade Faturamento', 'Cliente Nome'])
 
     # Recalcular a coluna color após os filtros e a reorganização
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
