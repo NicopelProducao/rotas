@@ -319,6 +319,10 @@ if uploaded_file is not None:
     with st.sidebar:
         # Extrair apenas o nome do cliente após "//"
         df_filtered['Cliente Nome'] = df_filtered['Cliente'].str.split('//').str[1].str.strip()
+        
+        cidades_filtered = df_filtered['Cidade Faturamento'].unique().tolist()
+        st.sidebar.write("### Reorganizar Cidades")
+        sorted_cidades = sort_items(cidades_filtered)
 
         # Obter a lista de clientes únicos para reorganização
         clientes_filtered = df_filtered['Cliente Nome'].unique().tolist()
@@ -326,9 +330,7 @@ if uploaded_file is not None:
         sorted_clientes = sort_items(clientes_filtered)
 
         # Obter a lista de cidades únicas para reorganização
-        cidades_filtered = df_filtered['Cidade Faturamento'].unique().tolist()
-        st.sidebar.write("### Reorganizar Cidades")
-        sorted_cidades = sort_items(cidades_filtered)
+        
 
         st.markdown("***Grupo Nicopel Embalagens***")
         st.markdown('''Aplicativo desenvolvido por: ''')
