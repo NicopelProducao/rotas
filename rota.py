@@ -229,7 +229,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
         if row['color'] == 0:
             pdf.set_fill_color(255, 255, 255)  # Branco
         else:
-            pdf.set_fill_color(255, 255, 255)  # Branco
+            pdf.set_fill_color(242, 242, 242)  # Branco
 
         # Adicionar dados do pedido com fundo colorido
         pdf.cell(15, 5, txt=str(row['Nº Pedido']), border=1, align="C", fill=True if row['color'] == 0 else False)
