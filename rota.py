@@ -314,6 +314,8 @@ if uploaded_file is not None:
     if excluded_clientes:
         df_filtered = df_filtered[~df_filtered["Cliente"].isin(excluded_clientes)]  # Excluir os clientes selecionados
 
+    df_filtered = df_filtered.sort_values(by=['Cidade Faturamento'], ascending=True)
+
     with st.sidebar:
         # Extrair apenas o nome do cliente após "//"
         df_filtered['Cliente Nome'] = df_filtered['Cliente'].str.split('//').str[1].str.strip()
