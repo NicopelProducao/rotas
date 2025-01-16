@@ -241,7 +241,7 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
         
         cliente_nome_parte = str(row['Cliente Nome']).split('-')[0].strip()  # Antes do '-'
         cliente_parte = str(row['Cliente']).split('-')[0].strip()  # Antes do '-' na coluna 'Cliente'
-        texto_concatenado = f"{cliente_nome_parte} - {cliente_parte} - {df_filtered["Data Pedido"]}"
+        texto_concatenado = f"{cliente_nome_parte} - {cliente_parte} - {row["Data Pedido"]}"
 
         pdf.cell(60, 5, txt=texto_concatenado, border=1, align="L", fill=True if row['color'] == 0 else False)
         pdf.cell(80, 5, txt=str(row['Descrição Item Faturamento']), border=1, align="C", fill=True if row['color'] == 0 else False)
