@@ -332,7 +332,8 @@ if uploaded_file is not None:
         # Extrair apenas o nome do cliente após "//"
         df_filtered['Cliente Nome'] = df_filtered['Cliente'].str.split('//').str[1].str.strip()
         
-        cidades_filtered = df_filtered['Cidade Faturamento'].unique().tolist()
+        cidades_filtered = df_filtered['Cidade Faturamento'].dropna().astype(str).unique().tolist()
+        
         st.sidebar.write("### Reorganizar Cidades")
         sorted_cidades = sort_items(cidades_filtered)
 
