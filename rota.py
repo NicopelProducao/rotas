@@ -372,7 +372,7 @@ if uploaded_file is not None:
     df_filtered['color'] = df_filtered['Nº Pedido'].ne(df_filtered['Nº Pedido'].shift()).cumsum() % 2
 
     # Exibir DataFrame filtrado com altura aumentada
-    st.dataframe(df_filtered.style.apply(apply_color, axis=1), hide_index=True, use_container_width=True, height=600)
+    st.table(df_filtered.style.apply(apply_color, axis=1))
     # Gerar e permitir o download do PDF
 
  
