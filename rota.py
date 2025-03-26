@@ -336,10 +336,9 @@ if uploaded_file is not None:
         
         st.sidebar.write("### Reorganizar Cidades")
         sorted_cidades = sort_items(cidades_filtered)
-
+    
         # Obter a lista de clientes únicos para reorganização
-        clientes_filtered = df_filtered["clientes"].dropna().astype(str).tolist()
-       
+        clientes_filtered = df_filtered['Cliente Nome'].unique().tolist()
         st.sidebar.write("### Reorganizar Clientes")
         sorted_clientes = sort_items(clientes_filtered)
 
