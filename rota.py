@@ -124,11 +124,12 @@ def process_excel_data(file):
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
             numero_os = row[0]
             qtd = row[1]
+            valor_item = row[2]
             descricao_item = row[3]
 
             processed_data.append([current_order, current_client, current_city, current_date, 
                                    current_freight_type, qtd, descricao_item, current_obs, 
-                                   current_freight_value, current_total_value, current_seller])
+                                   current_freight_value, valor_item, current_seller])
 
     # Criar DataFrame com os dados processados
     df_processed = pd.DataFrame(processed_data, columns=["Nº Pedido", "Cliente", "Cidade Faturamento", 
