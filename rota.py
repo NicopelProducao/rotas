@@ -126,10 +126,11 @@ def process_excel_data(file):
             descricao_item = row[3]
 
             processed_data.append([current_order, current_client, current_city, current_date, 
-                                   current_freight_type,  qtd, descricao_item, current_obs])
+                                   current_freight_type,  qtd, descricao_item, current_obs, current_freight_value, current_seller])
 
     # Criar DataFrame com os dados processados
-    print(processed_data)
+
+    st.dataframe(processed_data)
     df_processed = pd.DataFrame(processed_data, columns=["Nº Pedido",  "Cliente", "Cidade Faturamento", 
                                                          "Data Pedido", "Tipo Frete", 
                                                          "Qtd", "Descrição Item Faturamento", "Obs."])
