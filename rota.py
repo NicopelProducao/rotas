@@ -135,7 +135,7 @@ def process_excel_data(file):
     df_processed = pd.DataFrame(processed_data, columns=["Nº Pedido", "Cliente", "Cidade Faturamento", 
                                                          "Data Pedido", "Tipo Frete", "Qtd", 
                                                          "Descrição Item Faturamento", "Obs.",
-                                                         "Valor Frete", "valor_unit", "Vendedor"])
+                                                         "Valor Frete", "Valor Item", "Vendedor"])
 
     # Remover a primeira linha (linha 1) e as linhas com células vazias nas colunas "Qtd" e "Descrição Item Faturamento"
     df_processed = df_processed.drop(index=0)  # Remove a linha 1 (índice 0)
