@@ -129,6 +129,7 @@ def process_excel_data(file):
                                    current_freight_type,  qtd, descricao_item, current_obs])
 
     # Criar DataFrame com os dados processados
+    print(processed_data)
     df_processed = pd.DataFrame(processed_data, columns=["Nº Pedido",  "Cliente", "Cidade Faturamento", 
                                                          "Data Pedido", "Tipo Frete", 
                                                          "Qtd", "Descrição Item Faturamento", "Obs."])
