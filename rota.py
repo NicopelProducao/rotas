@@ -119,7 +119,7 @@ def process_excel_data(file):
             current_freight_value = row[8]
             current_total_value = row[10]
             current_obs = row[11]
-            id_print_one = row[12] if len(row) > 11 else ""
+            id_print_one = row[11] if len(row) > 11 else ""
         
         # Identificar os itens, mas excluir a linha onde a coluna "Qtd" contém "Qtd"
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
