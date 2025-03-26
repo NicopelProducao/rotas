@@ -104,6 +104,7 @@ def process_excel_data(file):
     current_freight_value = ""
     current_total_value = ""
     current_obs = ""
+    id_print_one= ""
 
     for i, row in df.iterrows():
         # Identificar as linhas com informações do pedido
@@ -118,8 +119,8 @@ def process_excel_data(file):
             current_freight_type = row[7]
             current_freight_value = row[8]
             current_total_value = row[10]
-            current_obs = row[11]
-            id_print_one = row[11]
+            current_obs = row[11] if len(row) > 11 else ""
+            id_print_one = row[13] if len(row) > 12 else ""
         
         # Identificar os itens, mas excluir a linha onde a coluna "Qtd" contém "Qtd"
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
