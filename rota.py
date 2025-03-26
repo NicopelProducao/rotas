@@ -340,7 +340,7 @@ if uploaded_file is not None:
         # Obter a lista de clientes únicos para reorganização
         clientes_filtered = df_filtered['Cliente Nome'].unique().tolist()
         st.sidebar.write("### Reorganizar Clientes")
-        sorted_clientes = sort_items(clientes_filtered)
+        sorted_clientes = sort_items([str(item) for item in clientes_filtered])
 
         # Obter a lista de cidades únicas para reorganização
         
