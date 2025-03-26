@@ -124,18 +124,18 @@ def process_excel_data(file):
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
             numero_os = row[0]
             qtd = row[1]
-            valor_item = row[2]
+            valor_unit = row[2]
             descricao_item = row[3]
 
             processed_data.append([current_order, current_client, current_city, current_date, 
                                    current_freight_type, qtd, descricao_item, current_obs, 
-                                   current_freight_value, valor_item, current_seller])
+                                   current_freight_value, valor_unit, current_seller])
 
     # Criar DataFrame com os dados processados
     df_processed = pd.DataFrame(processed_data, columns=["Nº Pedido", "Cliente", "Cidade Faturamento", 
                                                          "Data Pedido", "Tipo Frete", "Qtd", 
                                                          "Descrição Item Faturamento", "Obs.",
-                                                         "Valor Frete", "Valor Item", "Vendedor"])
+                                                         "Valor Frete", "valor_unit", "Vendedor"])
 
     # Remover a primeira linha (linha 1) e as linhas com células vazias nas colunas "Qtd" e "Descrição Item Faturamento"
     df_processed = df_processed.drop(index=0)  # Remove a linha 1 (índice 0)
