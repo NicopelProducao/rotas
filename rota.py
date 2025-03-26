@@ -119,6 +119,7 @@ def process_excel_data(file):
             current_freight_value = row[8]
             current_total_value = row[10]
             current_obs = row[11] if len(row) > 11 else ""
+            id_print_one = row[13] if len(row) > 13 else ""
         
         # Identificar os itens, mas excluir a linha onde a coluna "Qtd" contém "Qtd"
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
@@ -129,13 +130,13 @@ def process_excel_data(file):
 
             processed_data.append([current_order, current_client, current_city, current_date, 
                                    current_freight_type, qtd, descricao_item, valor_unit, current_freight_value, current_obs, 
-                                     current_seller])
+                                     current_seller, id_print_one])
 
     # Criar DataFrame com os dados processados
     df_processed = pd.DataFrame(processed_data, columns=["Nº Pedido", "Cliente", "Cidade Faturamento", 
                                                          "Data Pedido", "Tipo Frete", "Qtd", 
                                                          "Descrição Item Faturamento","Valor Item","Frete",  "Obs.",
-                                                     "Vendedor"])
+                                                     "Vendedor", "ID print one"])
 
     # Remover a primeira linha (linha 1) e as linhas com células vazias nas colunas "Qtd" e "Descrição Item Faturamento"
     df_processed = df_processed.drop(index=0)  # Remove a linha 1 (índice 0)
