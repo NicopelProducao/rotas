@@ -469,5 +469,6 @@ def mapa():
 
 if st.button(f"Ver Mapa Iterativo", use_container_width=True, type="primary"):
     mapa()
-
+    
+st.write("RELATORIO DO SISTEMA TEM QUE ESTAR NESSE FORMATO")
 st.image("img/filtros_colunas.png")
