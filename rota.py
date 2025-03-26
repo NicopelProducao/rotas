@@ -121,7 +121,7 @@ def process_excel_data(file):
             current_obs = row[11] if len(row) > 11 else ""
         
         # Identificar os itens, mas excluir a linha onde a coluna "Qtd" contém "Qtd"
-        if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd" and pd.notna(row[1]) and row[1] != "":
+        if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
             numero_os = row[0]
             qtd = row[1]
             valor_unit = row[2]
