@@ -143,7 +143,7 @@ def process_excel_data(file):
     # Converter a coluna "Data Pedido" para datetime e criar uma coluna "Semana"
     df_processed["Data Pedido"] = pd.to_datetime(df_processed["Data Pedido"], errors='coerce')
     df_processed['Semana'] = df_processed['Data Pedido'].dt.isocalendar().week
-    st.dataframe(df_processed)
+  
     return df_processed
 #======================================
 def add_watermark(image_path, output_path, opacity=0.1):
