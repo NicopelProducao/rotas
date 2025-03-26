@@ -118,7 +118,7 @@ def process_excel_data(file):
             current_freight_type = row[7]
             current_freight_value = row[8]
             current_total_value = row[10]
-            current_obs = row[11] if len(row) > 11 else ""
+            current_obs = row[11]
             id_print_one = row[13] if len(row) > 11 else ""
         
         # Identificar os itens, mas excluir a linha onde a coluna "Qtd" contém "Qtd"
