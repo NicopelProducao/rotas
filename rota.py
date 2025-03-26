@@ -396,6 +396,8 @@ if uploaded_file is not None:
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
+    st.image("img/filtros_colunas.png", use_column_width=True)
+
 if uploaded_file2 is not None:
     if uploaded_file2.name.endswith("csv"):
         # Se for CSV, carregar com pandas e especificar o cabeçalho correto
