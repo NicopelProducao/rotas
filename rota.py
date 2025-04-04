@@ -201,12 +201,18 @@ def gerar_pdf(df_filtered, frete_tipo, semana,  cidades, dia,  motorista, veicul
     pdf.cell(80, 5, txt=f"Veiculo: {veiculo if veiculo else 'Não especificado'}", ln=False)
     pdf.ln(5)  # Adiciona uma linha em branco entre o cabeçalho e a tabela
     
-    pdf.set_font("Arial", size=6)
+    pdf.set_font("Arial", size=7)
     pdf.set_fill_color(200, 200, 200)  # Cinza claro para destaque
     pdf.cell(193, 4, txt="Legenda: ACK = Acoplada Kraft | ACB = Acoplada Branca | PBJP = Papelão Branco JP | PKJP = Papelão Kraft JP", border=1, align="C", fill=True)
+    pdf.ln(4)  # Pequeno espaçamento entre as linhas
+
+    # Segunda linha da legenda
     pdf.cell(193, 4, txt="PBK = Papelão Branco Klabin | PKK = Papelão Kraft Klabin | PKD = Papelão Kraft Davi | PKDI = Papelão Kraft Davi Invertido", border=1, align="C", fill=True)
-    pdf.cell(193, 4, txt="PPD = Papelão Pinho Davi | PKK = Papelão Kraft Klabin | PKD = Papelão Kraft Davi | PKDI = Papelão Kraft Davi Invertido", border=1, align="C", fill=True)
-    pdf.ln(5) 
+    pdf.ln(4)  # Pequeno espaçamento entre as linhas
+
+    # Terceira linha da legenda
+    pdf.cell(193, 4, txt="PPD = Papelão Pinho Davi", border=1, align="C", fill=True)
+    pdf.ln(5)  # Espaço antes da tabela
 
     pdf.set_text_color(255, 255, 255)
     # Adicionar cabeçalho da tabela (ajustado para largura da página)
