@@ -88,7 +88,8 @@ def get_coordinates(row):
     return None, None
 # Função para processar os dados do Excel
 def process_excel_data(file):
-    # Ler o arquivo Excel
+    import pandas as pd
+
     df = pd.read_excel(file, header=None)
     
     processed_data = []
@@ -104,12 +105,13 @@ def process_excel_data(file):
     current_freight_value = ""
     current_total_value = ""
     current_obs = ""
-    id_print_one= ""
+    id_print_one = ""
+
+    last_valid_item = None  # Guarda a última linha de item válida
 
     for i, row in df.iterrows():
         # Identificar as linhas com informações do pedido
         if "//" in str(row[2]) and " - " in str(row[2]):
-            # Atualiza as informações gerais do pedido
             current_order = row[0]
             current_client = row[2]
             current_city = row[3]
@@ -121,18 +123,15 @@ def process_excel_data(file):
             current_total_value = row[10]
             current_obs = row[11] if len(row) > 11 else ""
             id_print_one = row[13] if len(row) > 13 else ""
-        
-    dados_validos = []
-    linha_anterior = None
 
-    for row in df:
+        # Se a linha atual tiver "Qtd", removemos a última linha válida
         if row[1] == "Qtd":
-            # Se a linha atual tem "Qtd", descartamos também a linha anterior, se ela existir
-            if linha_anterior:
-                dados_validos.pop()  # Remove a última linha válida adicionada
-            linha_anterior = None  # Zera a linha anterior
-            continue  # Pula essa linha
+            if last_valid_item:
+                processed_data.pop()  # Remove o último item adicionado
+                last_valid_item = None
+            continue  # pula a linha atual
 
+        # Verifica se a linha atual é um item válido
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
             numero_os = row[0]
             qtd = row[1]
