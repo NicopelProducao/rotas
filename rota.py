@@ -109,8 +109,10 @@ def process_excel_data(file):
 
     last_valid_item = None  # Guarda a última linha de item válida
 
-    for i, row in df.iterrows():
-        # Identificar as linhas com informações do pedido
+    for i in range(len(df)):
+        row = df.iloc[i]
+
+        # Atualiza dados do pedido
         if "//" in str(row[2]) and " - " in str(row[2]):
             current_order = row[0]
             current_client = row[2]
@@ -123,16 +125,20 @@ def process_excel_data(file):
             current_total_value = row[10]
             current_obs = row[11] if len(row) > 11 else ""
             id_print_one = row[13] if len(row) > 13 else ""
+            continue
 
-        # Se a linha atual tiver "Qtd", removemos a última linha válida
-        if row[1] == "Qtd":
-            if last_valid_item:
-                processed_data.pop()  # Remove o último item adicionado
-                last_valid_item = None
-            continue  # pula a linha atual
+        # Ignora se a linha atual ou próxima tiver "Qtd" na segunda coluna
+        proxima_e_qtd = False
+        if i + 1 < len(df):
+            proxima_row = df.iloc[i + 1]
+            proxima_e_qtd = proxima_row[1] == "Qtd"
 
-        # Verifica se a linha atual é um item válido
-        if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
+        if (
+            pd.to_numeric(row[0], errors='coerce') is not None and 
+            row[3] != "" and 
+            row[1] != "Qtd" and 
+            not proxima_e_qtd
+        ):
             numero_os = row[0]
             qtd = row[1]
             valor_unit = row[2]
