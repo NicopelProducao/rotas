@@ -122,10 +122,10 @@ def process_excel_data(file):
             current_obs = row[11] if len(row) > 11 else ""
             id_print_one = row[13] if len(row) > 13 else ""
         
-        dados_validos = []
+    dados_validos = []
     linha_anterior = None
 
-    for row in dados:
+    for row in df:
         if row[1] == "Qtd":
             # Se a linha atual tem "Qtd", descartamos também a linha anterior, se ela existir
             if linha_anterior:
