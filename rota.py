@@ -122,7 +122,17 @@ def process_excel_data(file):
             current_obs = row[11] if len(row) > 11 else ""
             id_print_one = row[13] if len(row) > 13 else ""
         
-        # Identificar os itens, mas excluir a linha onde a coluna "Qtd" contém "Qtd"
+        dados_validos = []
+    linha_anterior = None
+
+    for row in dados:
+        if row[1] == "Qtd":
+            # Se a linha atual tem "Qtd", descartamos também a linha anterior, se ela existir
+            if linha_anterior:
+                dados_validos.pop()  # Remove a última linha válida adicionada
+            linha_anterior = None  # Zera a linha anterior
+            continue  # Pula essa linha
+
         if pd.to_numeric(row[0], errors='coerce') is not None and row[3] != "" and row[1] != "Qtd":
             numero_os = row[0]
             qtd = row[1]
